@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MSEDCL Web Application - Power House Sub Division, Chhatrapati Sambhaji Nagar. Access tools like NC, MDAS, CRM, and more for managing electrical services.">
+    <title>MSEDCL WEB APPLICATION</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            padding-bottom: 60px; /* Space for the fixed banner */
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            background: var(--background);
+            color: var(--text-color);
+        }
+
+        /* Header */
+        .header {
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative; /* For positioning the drop-down button */
+            background: var(--header-bg);
+            color: var(--header-text);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+
+        .header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        /* Drop-Down Button */
+        .dropdown {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .dropbtn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            background: var(--menu-button-bg);
+            color: var(--menu-button-text);
+        }
+
+        .dropbtn:hover {
+            transform: translateY(-2px);
+            background: var(--menu-button-hover-bg);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--menu-bg);
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-content a {
+            color: var(--menu-button-text);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--menu-button-hover-bg);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Menu */
+        .menu {
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--menu-bg);
+        }
+
+        .menu a {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            background: var(--menu-button-bg);
+            color: var(--menu-button-text);
+        }
+
+        .menu a:hover {
+            transform: translateY(-5px);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            background: var(--menu-button-hover-bg);
+        }
+
+        /* Banner */
+        .banner {
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--banner-bg);
+            color: var(--banner-text);
+        }
+
+        .banner p {
+            margin: 0;
+            animation: marquee 15s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--menu-button-bg);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--menu-button-hover-bg);
+        }
+
+        /* Theme Colors */
+        .theme-light {
+            --background: #f5f7fa;
+            --header-bg: linear-gradient(45deg, #007BFF, #00C1FF);
+            --header-text: #fff;
+            --menu-bg: #007BFF;
+            --menu-button-bg: #00C1FF;
+            --menu-button-text: #fff;
+            --menu-button-hover-bg: #4CAF50;
+            --banner-bg: linear-gradient(45deg, #4CAF50, #81C784);
+            --banner-text: #fff;
+        }
+
+        .theme-dark {
+            --background: #1e1e2f;
+            --header-bg: linear-gradient(45deg, #333, #555);
+            --header-text: #fff;
+            --menu-bg: #333;
+            --menu-button-bg: #555;
+            --menu-button-text: #fff;
+            --menu-button-hover-bg: #4CAF50;
+            --banner-bg: linear-gradient(45deg, #4CAF50, #81C784);
+            --banner-text: #fff;
+        }
+
+        .theme-pink {
+            --background: #ffebee;
+            --header-bg: linear-gradient(45deg, #ff4081, #ff80ab);
+            --header-text: #fff;
+            --menu-bg: #ff4081;
+            --menu-button-bg: #ff80ab;
+            --menu-button-text: #fff;
+            --menu-button-hover-bg: #ff5252;
+            --banner-bg: linear-gradient(45deg, #ff5252, #ff867f);
+            --banner-text: #fff;
+        }
+
+        .theme-green {
+            --background: #e8f5e9;
+            --header-bg: linear-gradient(45deg, #4CAF50, #81C784);
+            --header-text: #fff;
+            --menu-bg: #4CAF50;
+            --menu-button-bg: #81C784;
+            --menu-button-text: #fff;
+            --menu-button-hover-bg: #45a049;
+            --banner-bg: linear-gradient(45deg, #45a049, #81C784);
+            --banner-text: #fff;
+        }
+
+        .theme-purple {
+            --background: #f3e5f5;
+            --header-bg: linear-gradient(45deg, #9c27b0, #e91e63);
+            --header-text: #fff;
+            --menu-bg: #9c27b0;
+            --menu-button-bg: #e91e63;
+            --menu-button-text: #fff;
+            --menu-button-hover-bg: #7b1fa2;
+            --banner-bg: linear-gradient(45deg, #7b1fa2, #e91e63);
+            --banner-text: #fff;
+        }
+
+        .theme-orange {
+            --background: #fff3e0;
+            --header-bg: linear-gradient(45deg, #ff9800, #ff5722);
+            --header-text: #fff;
+            --menu-bg: #ff9800;
+            --menu-button-bg: #ff5722;
+            --menu-button-text: #fff;
+            --menu-button-hover-bg: #f57c00;
+            --banner-bg: linear-gradient(45deg, #f57c00, #ff5722);
+            --banner-text: #fff;
+        }
+
+        .theme-gradient {
+            --background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            --header-bg: linear-gradient(45deg, #ff6f61, #ffcccb);
+            --header-text: #fff;
+            --menu-bg: #ff6f61;
+            --menu-button-bg: #ffcccb;
+            --menu-button-text: #333;
+            --menu-button-hover-bg: #ff5252;
+            --banner-bg: linear-gradient(45deg, #ff5252, #ff867f);
+            --banner-text: #fff;
+        }
+
+        .theme-neon {
+            --background: #000;
+            --header-bg: linear-gradient(45deg, #00ffcc, #00ff99);
+            --header-text: #000;
+            --menu-bg: #00ffcc;
+            --menu-button-bg: #00ff99;
+            --menu-button-text: #000;
+            --menu-button-hover-bg: #00cc99;
+            --banner-bg: linear-gradient(45deg, #00cc99, #00ff99);
+            --banner-text: #000;
+        }
+    </style>
+</head>
+<body class="theme-light">
+    <div class="header">
+        <h1>MSEDCL WEB APPLICATION</h1>
+        <h2>POWER HOUSE SUB DIVISION</h2>
+        <h3>CHHATRPATI SAMBHAJI NAGAR</h3>
+        <!-- Drop-Down Button -->
+        <div class="dropdown">
+            <button class="dropbtn">Change Theme</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeTheme('theme-light')">Light Theme</a>
+                <a href="#" onclick="changeTheme('theme-dark')">Dark Theme</a>
+                <a href="#" onclick="changeTheme('theme-pink')">Pink Theme</a>
+                <a href="#" onclick="changeTheme('theme-green')">Green Theme</a>
+                <a href="#" onclick="changeTheme('theme-purple')">Purple Theme</a>
+                <a href="#" onclick="changeTheme('theme-orange')">Orange Theme</a>
+                <a href="#" onclick="changeTheme('theme-gradient')">Gradient Theme</a>
+                <a href="#" onclick="changeTheme('theme-neon')">Neon Theme</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="http://web-srv.rapdrp.mahadiscom.in/ncapp/nc" target="_blank" aria-label="Navigate to NC">NC</a>
+        <a href="http://web-srv.rapdrp.mahadiscom.in/mda/mda" target="_blank" aria-label="Navigate to MDAS">MDAS</a>
+        <a href="https://mda.mahadiscom.in/mda/mda" target="_blank" aria-label="Navigate to MDAS NEW">MDAS NEW</a>
+        <a href="http://web-srv.rapdrp.mahadiscom.in/Crm/Crm" target="_blank" aria-label="Navigate to CRM">CRM</a>
+        <a href="https://cir.mahadiscom.in/ConsumerInspection" target="_blank" aria-label="Navigate to CIR">CIR</a>
+        <a href="https://wss.mahadiscom.in/wss/wss?uiActionName=getViewPayBill" target="_blank" aria-label="Navigate to View Pay Bill">ViewPayBill</a>
+        <a href="https://ltobr.mahadiscom.in/LTBillRevision" target="_blank" aria-label="Navigate to Bill Revision">Bill Revision</a>
+        <a href="https://console.mahadiscom.in/MobileAppWebConsole" target="_blank" aria-label="Navigate to Mobile App Web Console">Mobile App Web Console</a>
+        <a href="https://www.mahadiscom.in/dashboard" target="_blank" aria-label="Navigate to Dashboard">DASH BOARD</a>
+        <a href="http://web-srv.rapdrp.mahadiscom.in/BI" target="_blank" aria-label="Navigate to MSEDCL Reports">MSEDCL Reports</a>
+        <a href="https://occs.mahadiscom.in/occs/index" target="_blank" aria-label="Navigate to OCCS">OCCS</a>
+        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" aria-label="Navigate to Gmail">GMAIL</a>
+        <a href="https://mail.mahadiscom.in/webmail/" target="_blank" aria-label="Navigate to MSEDCL Mail">MSEDCL MAIL</a>
+        <a href="https://bibigdata.mahadiscom.in/BOE/OpenDocument/opendoc/openDocument.jsp?sIDType=CUID&iDocID=FoRpLVloWgYAKUIAAADX00cALET9hP.k&sInstance=Last" target="_blank" aria-label="Navigate to CRM Service Request Details">CRM Service Request Details</a>
+        <a href="https://www.mahadiscom.in/pd_amnesty/index.php" target="_blank" aria-label="Navigate to Abhay Yojana 2024">Abhay Yojana 2024</a>
+        <a href="https://web.whatsapp.com/" target="_blank" aria-label="Navigate to WhatsApp">WhatsApp</a>
+    </nav>
+    <div class="content">
+        <!-- Add content here if needed -->
+    </div>
+    <div class="banner">
+        <p>Welcome to MSEDCL Web Application</p>
+    </div>
+
+    <script>
+        // Function to change theme
+        function changeTheme(themeName) {
+            document.body.className = themeName;
+        }
+    </script>
+</body>
+</html>
